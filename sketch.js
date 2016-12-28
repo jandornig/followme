@@ -5,23 +5,31 @@ var acceleration
 var r
 var maxforce
 var maxspeed
+var followMe
+
 
 setup= function() {
   createCanvas(600,600)
   v = new vehicle(width/2,height/2)
+  followMeNew()
 }
 
 draw= function(){
     background(200);
   var mouse = new createVector(mouseX,mouseY)
   
+  if(position.x < followMe.x +2 && position.x> followMe.x-2 && position.y<followMe.y+2 && position.y> followMe.y-2){
+    followMeNew()
+  }
+ 
+  
   fill(100)
   stroke(0)
   strokeWeight(2)
-  ellipse(mouse.x,mouse.y, 50,50)
+  ellipse(followMe.x,followMe.y, 50,50)
   
   
-  v.seek(mouse);
+  v.seek(followMe);
   v.update();
   v.show();
   
@@ -72,6 +80,10 @@ vehicle.prototype.show=function(){
   vertex(r, r*2)
   endShape()
   pop()
+}
+
+function followMeNew(){
+followMe = new createVector(floor(random(width)),floor(random(height)))
 }
 
 
